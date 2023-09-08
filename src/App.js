@@ -3,10 +3,10 @@ import "./App.css";
 import React, { useState, useRef } from "react";
 
 const Button = function (a) {
-  const { onClick, className, bs, text } = a;
+  const { onClick,inner, className, bs, text } = a;
   return (
     <button onClick={onClick} className={className} style={bs}>
-      <div>{text}</div>
+      <div>{(inner||text)}</div>
     </button>
   );
 };
@@ -15,11 +15,11 @@ const Input = function (a) {
   c.id=Error?.type
   return (
     <div className="">
+      <div className="input-label">{a?.placeholder}:</div>
+      <input className={"input"+(Error?.type && Error?.type === Error?.is?.type?" input-error":"")} {...c} />
       {Error?.type && Error?.type === Error?.is?.type && (
         <div className="input-error-text">{Error?.is?.name}</div>
       )}
-      <div className="input-label">{a?.placeholder}:</div>
-      <input className="input input-error" {...c} />
     </div>
   );
 };
@@ -29,11 +29,12 @@ const getButtonStyle = function (a) {
 
 function App() {
   const [Err, sErr] = useState({ type: null, name: null });
+  const [t, n] = useState(false );
   const nm = useRef(null)
   const Em = useRef(null)
   const ps = useRef(null)
   const cps = useRef(null);
-  function run(){alert("sistema ok!");console.log(this)}
+  function run(){alert("sistema ok!")}
   function verific() {
     const i_nm = String(document .querySelector("#nm")?.value).trim();
     const i_Em = String(document .querySelector("#em")?.value).trim();
@@ -43,10 +44,11 @@ function App() {
     if(!/^(\S){1,150}\@\w{1,5}\.\w{1,5}$/.test(i_Em) ){sErr({ type: "em", name: "Mano, Seu email não ta correto" });return}
     if(i_ps. length <8 ){sErr({ type: "ps", name: "Oia, Contando o tamanho da senha a senha tem menor que 8 carracterias" });return}
     if(i_ps!==i_cps){sErr({ type: "ps", name: "Oia, As Senhas nao bat " });return}
+    n(true)
     sErr({ type: null, name: null  });
-    run.call(this)
+    run();
   }
-  const [typeIsLogin, st] = useState(false);
+  //const [typeIsLogin, st] = useState(false);
   return (
     <div className="app">
       <div>
@@ -55,7 +57,7 @@ function App() {
         </div>
         <div className="login-tab">
           {/*<Button text="entra" bs={getButtonStyle( !!typeIsLogin)} className="login-tab-button"/>
-        <Button text="registrar" bs={getButtonStyle(!typeIsLogin)} className="login-tab-button"/>*/}
+          <Button text="registrar" bs={getButtonStyle(!typeIsLogin)} className="login-tab-button"/>*/}
         </div>
       </div>
       <div>
@@ -78,7 +80,7 @@ function App() {
           placeholder="confirme sua senha"
           Error={{ type: "cps", is: Err }}
         />
-        <Button onClick={verific} text="registrar" className="login-btn" />
+        <Button onClick={verific} disabled={t} text="registrar" className="login-btn" inner={t&&<div className="loading"/>} />
       </div>
     </div>
   );
