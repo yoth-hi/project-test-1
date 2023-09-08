@@ -31,10 +31,6 @@
 *{
   font-weight: 800;
 }
-.input-error{
-  border-color:  red;
-  font-weight: 400!important;
-}
 .input-label{
   font-weight: 800;
 }
@@ -46,6 +42,10 @@
   padding: 5px;
   width: calc(100% - 14px);
   display: block;
+  font-weight: 400!important;
+}
+.input-error{
+  border-color:  red!important;
 }
 .app{ 
   width:  100%;
@@ -69,4 +69,17 @@ body{
   background: #000;
   color: #fff;
   width: 100%;
+}
+.loading{
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  border: 1px solid #fff2;
+  border-left-color: #fff;
+  animation: aa 1s linear infinite;
+  margin: 0 auto;
+}
+@keyframes aa{
+  0%{transform: rotate(0deg);}
+  100%{transform: rotate(360deg);}
 }
